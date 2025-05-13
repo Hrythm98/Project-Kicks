@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Kicks - Custom Sneakers</title>
+    <style>
+        /* Custom CSS */
+        :root {
+            --primary: #2d2d2d;
+            --accent: #ff5a5f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        nav {
+            background: var(--primary);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1542291026-7eec264c27ff') center/cover;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+
+        .brands {
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        .brand-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .brand-card img {
+            max-width: 150px;
+            filter: grayscale(100%);
+            transition: 0.3s;
+        }
+
+        .brand-card:hover img {
+            filter: grayscale(0);
+        }
+
+        .products {
+            padding: 3rem 5%;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            border: 1px solid #eee;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .customize-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 2rem 5%;
+            background: #f7f7f7;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .brand-grid, .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">PROJECT KICKS</div>
+        <div class="nav-links">
+            <a href="#custom">Customize</a>
+            <a href="#brands">Brands</a>
+            <a href="#shop">Shop</a>
+            <a href="#cart">Cart</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div>
+            <h1>Design Your Perfect Sneakers</h1>
+            <p>Customize Nike, Adidas, New Balance & Vans</p>
+            <button class="customize-btn" style="margin-top: 2rem;">Start Designing</button>
+        </div>
+    </section>
+
+    <section class="brands" id="brands">
+        <h2>Shop by Brand</h2>
+        <div class="brand-grid">
+            <div class="brand-card">
+                <img src="https://cdn.worldvectorlogo.com/logos/nike-6.svg" alt="Nike">
+            </div>
+            <div class="brand-card">
+                <img src="https://cdn.worldvectorlogo.com/logos/adidas-2021.svg" alt="Adidas">
+            </div>
+            <div class="brand-card">
+                <img src="https://cdn.worldvectorlogo.com/logos/new-balance-3.svg" alt="New Balance">
+            </div>
+            <div class="brand-card">
+                <img src="https://cdn.worldvectorlogo.com/logos/vans-4.svg" alt="Vans">
+            </div>
+        </div>
+    </section>
+
+    <section class="products" id="shop">
+        <h2 style="text-align: center; margin-bottom: 2rem;">Popular Customizations</h2>
+        <div class="product-grid">
+            <!-- Nike Product -->
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1603787081207-362bcef7c144" alt="Nike Custom">
+                <h3>Nike Air Force 1</h3>
+                <p>$149.99</p>
+                <button class="customize-btn" data-brand="nike">Customize & Buy</button>
+            </div>
+
+            <!-- Adidas Product -->
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1587731556938-38755b4803a6" alt="Adidas Custom">
+                <h3>Adidas Superstar</h3>
+                <p>$129.99</p>
+                <button class="customize-btn" data-brand="adidas">Customize & Buy</button>
+            </div>
+
+            <!-- New Balance Product -->
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4da" alt="New Balance Custom">
+                <h3>New Balance 574</h3>
+                <p>$159.99</p>
+                <button class="customize-btn" data-brand="new-balance">Customize & Buy</button>
+            </div>
+
+            <!-- Vans Product -->
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1562183241-b937af285bc7" alt="Vans Custom">
+                <h3>Vans Old Skool</h3>
+                <p>$99.99</p>
+                <button class="customize-btn" data-brand="vans">Customize & Buy</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div>
+            <h3>Free Shipping</h3>
+            <p>On all orders over $100</p>
+        </div>
+        <div>
+            <h3>Authentic Products</h3>
+            <p>100% genuine sneakers</p>
+        </div>
+        <div>
+            <h3>Secure Payment</h3>
+            <p>SSL encrypted transactions</p>
+        </div>
+        <div>
+            <h3>24/7 Support</h3>
+            <p>Dedicated customer service</p>
+        </div>
+    </section>
+
+    <script>
+        // Basic interactivity
+        document.querySelectorAll('.customize-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const brand = button.dataset.brand;
+                window.location.href = `/customize.html?brand=${brand}`;
+            });
+        });
+    </script>
+</body>
+</html>
