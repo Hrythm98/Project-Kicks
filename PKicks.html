@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Kicks - Custom Sneakers</title>
+    <style>
+        :root {
+            --primary: #773737;
+            --accent: #ff5a5f;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            background: #f4f4f4;
+        }
+        nav {
+            background: var(--primary);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .nav-links {
+            display: flex;
+        }
+        .nav-links button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            margin-left: 2rem;
+            cursor: pointer;
+            padding-bottom: 3px;
+            border-bottom: 2px solid transparent;
+            transition: border 0.2s;
+        }
+        .nav-links button.active, .nav-links button:hover {
+            border-bottom: 2px solid var(--accent);
+        }
+        .section {
+            display: none;
+            padding-top: 2rem;
+        }
+        .section.active {
+            display: block;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1542291026-7eec264c27ff') center/cover;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        .brands {
+            padding: 3rem 5%;
+            text-align: center;
+        }
+        .brand-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .brand-card img {
+            max-width: 150px;
+            filter: grayscale(100%);
+            transition: 0.3s;
+        }
+        .brand-card:hover img {
+            filter: grayscale(0);
+        }
+        .products {
+            padding: 3rem 5%;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .product-card {
+            border: 1px solid #eee;
+            padding: 1rem;
+            text-align: center;
+        }
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .customize-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 2rem 5%;
+            background: #f7f7f7;
+            text-align: center;
+        }
+    
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: #fff;
+            padding: 2rem;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: var(--primary);
+        }
+        .shoe-display {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .shoe-display img {
+            max-width: 300px;
+            height: auto;
+        }
+        .design-options {
+            display: flex;
+            justify-content: space-around;
+            margin: 1rem 0 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .design-options label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .design-options input[type="radio"] {
+            display: none;
+        }
+        .design-options img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        .design-options label span {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .design-options input[type="radio"]:checked + img,
+        .design-options label:hover img {
+            border: 2px solid var(--accent);
+            transform: scale(1.05);
+        }
+        .custom-form label {
+            display: block;
+            margin: 1rem 0 0.3rem;
+            font-weight: bold;
+        }
+        .custom-form input, .custom-form select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .save-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem;
+            width: 100%;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        .save-btn:hover {
+            background: #e14c4f;
+        }
+        .message {
+            text-align: center;
+            color: green;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+        
+       
+        .payment-container {
+            max-width: 500px;
+            margin: 2rem auto;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .payment-option:hover {
+            background-color: #f9f9f9;
+        }
+        .payment-option input {
+            margin-right: 1rem;
+        }
+        .payment-option img {
+            height: 30px;
+            margin-right: 1rem;
+        }
+        .card-details {
+            display: none;
+            margin-top: 1rem;
+        }
+        .card-details input {
+            width: 100%;
+            padding: 0.7rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .pay-btn {
+            background-color: #0070ba;
+            color: white;
+            border: none;
+            padding: 1rem;
+            width: 100%;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .pay-btn:hover {
+            background-color: #005c9e;
+        }
+        @media (max-width: 768px) {
+            .brand-grid, .features {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+          /* Cart Styles */
+        .cart-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: #fff;
+            padding: 2rem;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+        .cart-table th, .cart-table td {
+            border: 1px solid #eee;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        .cart-table th {
+            background: #f7f7f7;
+            color: var(--primary);
+        }
+        .remove-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .empty-cart {
+            text-align: center;
+            color: #888;
+            margin: 2rem 0;
+        }
+        .checkout-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+        }
+        .checkout-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        @media (max-width: 768px) {
+            .brand-grid, .features {
+                grid-template-columns: 1fr;
+            }
+            .cart-table, .cart-table th, .cart-table td {
+                font-size: 0.9rem;
+            }
+            .nav-links {
+                display: none;
+            }
+        }    
+
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">PROJECT KICKS</div>
+        <div class="nav-links">
+            <button class="active" onclick="showSection('home')">Home</button>
+            <button onclick="showSection('customize')">Customize</button>
+            <button onclick="showSection('cart')">Cart (<span id="cartCount">0</span>)</button>
+            <button onclick="showSection('payment')">Payment</button>
+            <button onclick="showSection('trackshipping')">Track Shipping</button>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="section active">
+        <div class="hero">
+            <div>
+                <h1>Design Your Perfect Sneakers</h1>
+                <p>Customize Nike, Adidas, New Balance & Vans</p>
+                <button class="customize-btn" style="margin-top: 2rem;" onclick="showSection('customize')">Start Designing</button>
+            </div>
+        </div>
+        <section class="brands" id="brands">
+            <h2>Shop by Brand</h2>
+            <div class="brand-grid">
+                <div class="brand-card">
+                    <img src="https://cdn.worldvectorlogo.com/logos/nike-6.svg" alt="Nike">
+                </div>
+                <div class="brand-card">
+                    <img src="https://cdn.logojoy.com/wp-content/uploads/20231013154327/Adidas-logo-1991-1-600x319.png" alt="Adidas">
+                </div>
+                <div class="brand-card">
+                    <img src="https://cdn.worldvectorlogo.com/logos/new-balance-3.svg" alt="New Balance">
+                </div>
+                <div class="brand-card">
+                    <img src="https://cdn.worldvectorlogo.com/logos/vans-4.svg" alt="Vans">
+                </div>
+            </div>
+        </section>
+        <section class="products" id="shop">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Popular Customizations</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1603787081207-362bcef7c144" alt="Nike Custom">
+                    <h3>Nike Air Force 1</h3>
+                    <p>$149.99</p>
+                    <button class="customize-btn" data-brand="nike" onclick="openCustomizer('nike')">Customize & Buy</button>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1587731556938-38755b4803a6" alt="Adidas Custom">
+                    <h3>Adidas Superstar</h3>
+                    <p>$129.99</p>
+                    <button class="customize-btn" data-brand="adidas" onclick="openCustomizer('adidas')">Customize & Buy</button>
+                </div>
+                <div class="product-card">
+                    <img src="https://www.bing.com/th?id=OPAC.51ElILhEmufVmw474C474&o=5&pid=21.1&w=203&h=252&rs=1&qlt=100&dpr=1&c=8&pcl=f5f5f5" alt="New Balance Custom">
+                    <h3>New Balance 574</h3>
+                    <p>$159.99</p>
+                    <button class="customize-btn" data-brand="new-balance" onclick="openCustomizer('new-balance')">Customize & Buy</button>
+                </div>
+                <div class="product-card">
+                    <img src="https://th.bing.com/th/id/OPAC.29jSVXeeFcxi1A474C474?w=200&h=204&rs=1&o=5&cb=iwp2&pid=21.1" alt="Vans Custom">
+                    <h3>Vans Old Skool</h3>
+                    <p>$99.99</p>
+                    <button class="customize-btn" data-brand="vans" onclick="openCustomizer('vans')">Customize & Buy</button>
+                </div>
+            </div>
+        </section>
+        <section class="features">
+            <div>
+                <h3>Free Shipping</h3>
+                <p>On all orders over $100</p>
+            </div>
+            <div>
+                <h3>Authentic Products</h3>
+                <p>100% genuine sneakers</p>
+            </div>
+            <div>
+                <h3>Secure Payment</h3>
+                <p>SSL encrypted transactions</p>
+            </div>
+            <div>
+                <h3>24/7 Support</h3>
+                <p>Dedicated customer service</p>
+            </div>
+        </section>
+    </section>
+
+    <!-- Customize Section -->
+    <section id="customize" class="section">
+        <div class="container">
+            <h1>Customize Your Sneakers</h1>
+            <div class="shoe-display">
+                <img id="shoeImage" src="" alt="Selected Shoe" />
+                <p id="brandName"></p>
+            </div>
+            <h2>Choose Design</h2>
+            <div class="design-options">
+                <label>
+                    <input type="radio" name="design" value="classic" required />
+                    <img src="https://www.bing.com/th?id=OPAC.epOnnHGglK%2bc8w474C474&o=5&pid=21.1&w=203&h=203&rs=1&qlt=100&dpr=1&c=8&pcl=f5f5f5" alt="Classic Design" />
+                    <span>Classic</span>
+                </label>
+                <label>
+                    <input type="radio" name="design" value="modern" />
+                    <img src="https://www.bing.com/th?id=OPAC.SLhJOmeeT2%2bAvA474C474&o=5&pid=21.1&w=150&h=150&rs=1&qlt=100&dpr=1" alt="Modern Design" />
+                    <span>Modern</span>
+                </label>
+                <label>
+                    <input type="radio" name="design" value="street" />
+                    <img src="https://th.bing.com/th/id/OIP.kMKzwNHDs30ztoO6lcy_SwHaHa?cb=iwp2&rs=1&pid=ImgDetMain" alt="Street Design" />
+                    <span>Street</span>
+                </label>
+            </div>
+            <form class="custom-form" id="customForm">
+                <label for="color">Choose Color:</label>
+                <select id="color" required>
+                    <option value="">-- Select Color --</option>
+                    <option value="White">White</option>
+                    <option value="Black">Black</option>
+                    <option value="Red">Red</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Green">Green</option>
+                </select>
+                <label for="size">Choose Size (US):</label>
+                <select id="size" required>
+                    <option value="">-- Select Size --</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                </select>
+                <label for="text">Add Custom Text:</label>
+                <input type="text" id="text" maxlength="20" placeholder="E.g. Your Name"/>
+                <button type="submit" class="save-btn">Save Customization</button>
+            </form>
+            <div class="message" id="message"></div>
+            <button id="addToCartBtn" class="save-btn" style="margin-top:1rem; display:none;">Add to Cart</button>
+        </div>
+    </section>
+
+    <!-- Cart Section -->
+    <section id="cart" class="section">
+        <div class="cart-container">
+            <h1>Your Cart</h1>
+            <div id="cartContent"></div>
+        </div>
+    </section>
+
+    <!-- Payment Section -->
+    <section id="payment" class="section">
+        <div class="payment-container">
+            <h1>Choose Payment Method</h1>
+            <label class="payment-option">
+                <input type="radio" name="payment" value="paypal" onclick="showPayment('paypal')"/>
+                <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal" />
+                Pay with PayPal
+            </label>
+            <label class="payment-option">
+                <input type="radio" name="payment" value="card" onclick="showPayment('card')"/>
+                <img src="https://img.icons8.com/color/48/000000/visa.png" alt="Visa" />
+                <img src="https://img.icons8.com/color/48/000000/mastercard.png" alt="MasterCard" />
+                Pay with Credit/Debit Card
+            </label>
+            <div class="card-details" id="cardDetails">
+                <input type="text" placeholder="Cardholder Name" required />
+                <input type="text" placeholder="Card Number" required />
+                <input type="text" placeholder="MM/YY" required />
+                <input type="text" placeholder="CVV" required />
+            </div>
+            <button class="pay-btn" onclick="submitPayment()">Proceed to Pay</button>
+        </div>
+    </section>
+
+    <script>
+     // --- Navigation ---
+        function showSection(section) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(section).classList.add('active');
+            document.querySelectorAll('.nav-links button').forEach(btn => btn.classList.remove('active'));
+            const navBtns = Array.from(document.querySelectorAll('.nav-links button'));
+            navBtns.forEach(btn => {
+                if (btn.textContent.toLowerCase().includes(section)) btn.classList.add('active');
+            });
+            // Update cart view if needed
+            if(section === 'cart') renderCart();
+        }
+
+        // --- Shoe Customizer Logic ---
+        let selectedBrand = null;
+        let selectedProduct = null;
+        let customization = {};
+        let cart = [];
+
+        // Product info for price/brand
+        const products = {
+            nike: {
+                name: "Nike Air Force 1",
+                price: 149.99,
+                img: "https://images.unsplash.com/photo-1603787081207-362bcef7c144"
+            },
+            adidas: {
+                name: "Adidas Superstar",
+                price: 129.99,
+                img: "https://images.unsplash.com/photo-1587731556938-38755b4803a6"
+            },
+            "new-balance": {
+                name: "New Balance 574",
+                price: 159.99,
+                img: "https://www.bing.com/th?id=OPAC.51ElILhEmufVmw474C474&o=5&pid=21.1&w=203&h=252&rs=1&qlt=100&dpr=1&c=8&pcl=f5f5f5"
+            },
+            vans: {
+                name: "Vans Old Skool",
+                price: 99.99,
+                img: "https://th.bing.com/th/id/OPAC.29jSVXeeFcxi1A474C474?w=200&h=204&rs=1&o=5&cb=iwp2&pid=21.1"
+            }
+        };
+
+        function openCustomizer(brand) {
+            selectedBrand = brand;
+            selectedProduct = products[brand];
+            document.getElementById('shoeImage').src = selectedProduct.img;
+            document.getElementById('brandName').textContent = selectedProduct.name + " - $" + selectedProduct.price;
+            showSection('customize');
+            // Reset form
+            document.getElementById('customForm').reset();
+            document.getElementById('message').textContent = "";
+            document.getElementById('addToCartBtn').style.display = "none";
+        }
+
+        // --- Customization Form ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listener for form submission
+            const customForm = document.getElementById('customForm');
+            if (customForm) {
+                customForm.addEventListener('submit', function(e){
+                    e.preventDefault();
+                    const design = document.querySelector('input[name="design"]:checked');
+                    const color = document.getElementById('color').value;
+                    const size = document.getElementById('size').value;
+                    const text = document.getElementById('text') ? document.getElementById('text').value : '';
+                    if(!design || !color || !size) {
+                        document.getElementById('message').textContent = "Please complete all options!";
+                        return;
+                    }
+                    customization = {
+                        brand: selectedBrand,
+                        name: selectedProduct.name,
+                        price: selectedProduct.price,
+                        img: selectedProduct.img,
+                        design: design.value,
+                        color,
+                        size,
+                        text
+                    };
+                    document.getElementById('message').textContent = "Customization saved! You can now add to cart.";
+                    document.getElementById('addToCartBtn').style.display = "inline-block";
+                });
+            }
+
+            // Add event listener for Add to Cart button
+            const addToCartBtn = document.getElementById('addToCartBtn');
+            if (addToCartBtn) {
+                addToCartBtn.addEventListener('click', function(){
+                    if(customization && customization.brand){
+                        cart.push({...customization});
+                        updateCartCount();
+                        document.getElementById('message').textContent = "Added to cart!";
+                        this.style.display = "none";
+                    }
+                });
+            }
+        });
+
+        function updateCartCount(){
+            document.getElementById('cartCount').textContent = cart.length;
+        }
+
+        // --- Render Cart ---
+        function renderCart(){
+            const cartContent = document.getElementById('cartContent');
+            if(!cartContent) return;
+            if(cart.length === 0){
+                cartContent.innerHTML = `<div class="empty-cart">Your cart is empty.</div>`;
+                return;
+            }
+            let html = `
+                <table class="cart-table">
+                    <tr>
+                        <th>Shoe</th>
+                        <th>Design</th>
+                        <th>Color</th>
+                        <th>Size</th>
+                        <th>Text</th>
+                        <th>Price</th>
+                        <th>Remove</th>
+                    </tr>
+            `;
+            let total = 0;
+            cart.forEach((item, idx) => {
+                total += item.price;
+                html += `
+                    <tr>
+                        <td>
+                            <img src="${item.img}" alt="${item.name}" style="width:60px;height:40px;"><br>
+                            ${item.name}
+                        </td>
+                        <td>${capitalize(item.design)}</td>
+                        <td>${item.color}</td>
+                        <td>${item.size}</td>
+                        <td>${item.text || '-'}</td>
+                        <td>$${item.price.toFixed(2)}</td>
+                        <td><button class="remove-btn" onclick="removeFromCart(${idx})">Remove</button></td>
+                    </tr>
+                `;
+            });
+            html += `
+                <tr>
+                    <td colspan="5" style="text-align:right;"><strong>Total:</strong></td>
+                    <td colspan="2"><strong>$${total.toFixed(2)}</strong></td>
+                </tr>
+                </table>
+                <button class="checkout-btn" onclick="goToPayment()" ${cart.length === 0 ? 'disabled' : ''}>Proceed to Payment</button>
+            `;
+            cartContent.innerHTML = html;
+        }
+
+        function capitalize(str){
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        window.removeFromCart = function(idx){
+            cart.splice(idx,1);
+            updateCartCount();
+            renderCart();
+        }
+
+        window.goToPayment = function(){
+            showSection('payment');
+        }
+
+        // --- Payment Section ---
+        function showPayment(method){
+            document.getElementById('cardDetails').style.display = (method === 'card') ? 'block' : 'none';
+        }
+        function submitPayment(){
+            alert("Thank you for your purchase! (Demo only)");
+            cart = [];
+            updateCartCount();
+            renderCart();
+            showSection('home');
+        }
+
+        // --- Initial Setup ---
+        // Show home by default
+        showSection('home');
+
+    </script>
+</body>
+</html>
+
+
